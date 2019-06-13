@@ -103,33 +103,6 @@ def prepare_params():
     parser.add_argument("-word_embedding_dim", help="Embedding dimension", type=int,
                         default=200, required=False)
 
-    # filters
-    parser.add_argument("-filter_topk", help="", type=int,
-                        default=100, required=False)
-    parser.add_argument("-filter_rnn_hidden", help="", type=int,
-                        default=256, required=False)
-    parser.add_argument("-filter_rnn_dir", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-filter_rnn_type", help="", type=str,
-                        default="gru", required=False)
-    parser.add_argument("-filter_dropout_prob", help="", type=float,
-                        default=0.5, required=False)
-    parser.add_argument("-saved_filter_file", help="", type=str,
-                        default="saved_models/simple_rnn_filter_best.pt", required=False)
-    # match net
-    parser.add_argument("-mn_word_aggr_hidden", help="", type=int,
-                        default=128, required=False)
-    parser.add_argument("-mn_word_aggr_rnn_dir", help="", type=int,
-                        default=2, required=False)
-    parser.add_argument("-mn_sup_tgt_aggr_hidden", help="", type=int,
-                        default=128, required=False)
-    parser.add_argument("-mn_sup_tgt_aggr_rnn_dir", help="", type=int,
-                        default=2, required=False)
-    parser.add_argument("-mn_fc_bi_lstm_hidden", help="", type=int,
-                        default=128, required=False)
-    parser.add_argument("-mn_dropout_prob", help="", type=float,
-                        default=0.1, required=False)
-
     # beam search
     parser.add_argument("-beam_width_test", help="Beam search width when testing", type=int,
                         default=4, required=False)
@@ -141,22 +114,6 @@ def prepare_params():
                         default=0.0, required=False)
     parser.add_argument("-bs_div_gamma", help="Gamma controlling beam search diversity", type=float,
                         default=0.0, required=False)
-
-    # cbw
-    parser.add_argument("-cbw_ft_embed_learner_dropout_prob", help="", type=float,
-                        default=0.0, required=False)
-    parser.add_argument("-cbw_tft_embed_learner_dropout_prob", help="", type=float,
-                        default=0.0, required=False)
-    parser.add_argument("-cbw_tft_n_layers", help="", type=int,
-                        default=6, required=False)
-    parser.add_argument("-cbw_tft_hidden_size", help="", type=int,
-                        default=512, required=False)
-    parser.add_argument("-cbw_tft_pos_ff_ratio", help="", type=int,
-                        default=6, required=False)
-    parser.add_argument("-n_tft_embedding_heads", help="", type=int,
-                        default=8, required=False)
-    parser.add_argument("-cbw_window", help="", type=int,
-                        default=5, required=False)
 
     # seq2seq
     parser.add_argument("-s2s_teacher_forcing_ratio", help="Seq2seq teacher forcing ratio", type=float,
@@ -180,153 +137,32 @@ def prepare_params():
     parser.add_argument("-s2s_encoder_rnn_dir", help="RNN direction", type=int,
                         default=2, required=False)
 
-    # transformer
-    parser.add_argument("-t_dropout_prob", help="Transformer dropout prob", type=float,
-                        default=0.1, required=False)
-    parser.add_argument("-t_teacher_forcing_ratio", help="Transformer teacher forcing ratio", type=float,
-                        default=1.0, required=False)
-    parser.add_argument("-t_hidden_size", help="Transformer Encoder/decoder hidden size", type=int,
-                        default=512, required=False)
-    parser.add_argument("-t_feedforward_hidden_size", help="Transformer positional feedforward hidden size", type=int,
-                        default=2048, required=False)
-    parser.add_argument("-t_num_attn_heads", help="Number of attention heads", type=int,
-                        default=8, required=False)
-    parser.add_argument("-t_num_encoder_layers", help="Encoder number of layers", type=int,
-                        default=6, required=False)
-    parser.add_argument("-t_num_decoder_layers", help="Decoder number of layers", type=int,
-                        default=6, required=False)
-
-    # esg
-    parser.add_argument("-esg_d_model", help="", type=int,
-                        default=256, required=False)
-
-    # keg
-    parser.add_argument("-keg_d_model", help="", type=int,
-                        default=1024, required=False)
-
-    # a2g
-    parser.add_argument("-a2g_dropout_prob", help="Dropout prob", type=float,
+    # rwg
+    parser.add_argument("-rwg_dropout_prob", help="Dropout prob", type=float,
                         default=0.0, required=False)
-    parser.add_argument("-a2g_hidden_size", help="Hidden size", type=int,
+    parser.add_argument("-rwg_hidden_size", help="Hidden size", type=int,
                         default=512, required=False)
-    parser.add_argument("-a2g_rnn_dir", help="", type=int,
+    parser.add_argument("-rwg_rnn_dir", help="", type=int,
                         default=2, required=False)
-    parser.add_argument("-a2g_rnn_layers", help="", type=int,
+    parser.add_argument("-rwg_rnn_layers", help="", type=int,
                         default=1, required=False)
-    parser.add_argument("-a2g_feedforward_hidden_size", help="", type=int,
+    parser.add_argument("-rwg_feedforward_hidden_size", help="", type=int,
                         default=1024, required=False)
-    parser.add_argument("-a2g_num_attn_heads", help="Number of attention heads", type=int,
+    parser.add_argument("-rwg_num_attn_heads", help="Number of attention heads", type=int,
                         default=8, required=False)
-    parser.add_argument("-a2g_num_encoder_layers", help="Encoder number of layers", type=int,
+    parser.add_argument("-rwg_num_encoder_layers", help="Encoder number of layers", type=int,
                         default=2, required=False)
-    parser.add_argument("-a2g_rnn_pool_size", help="", type=int,
+    parser.add_argument("-rwg_rnn_pool_size", help="", type=int,
                         default=1, required=False)
 
-    # s2a_dv_sel
-    parser.add_argument("-s2a_dv_sel_dropout_prob", help="Dropout prob", type=float,
-                        default=0.05, required=False)
-    parser.add_argument("-s2a_dv_sel_hidden_size", help="Hidden size", type=int,
-                        default=128, required=False)
-    parser.add_argument("-s2a_dv_sel_rnn_dir", help="", type=int,
-                        default=2, required=False)
-    parser.add_argument("-s2a_dv_sel_rnn_layers", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-s2a_dv_sel_feedforward_hidden_size", help="", type=int,
-                        default=1024, required=False)
-    parser.add_argument("-s2a_dv_sel_num_attn_heads", help="Number of attention heads", type=int,
-                        default=4, required=False)
-    parser.add_argument("-s2a_dv_sel_num_attn_layers", help="Number of layers", type=int,
-                        default=1, required=False)
-
-    # s2am_dv_sel
-    parser.add_argument("-s2am_dv_sel_dropout_prob", help="Dropout prob", type=float,
+    # dv_seq2seq
+    parser.add_argument("-dv_seq2seq_dropout_prob", help="Dropout prob", type=float,
                         default=0.1, required=False)
-    parser.add_argument("-s2am_dv_sel_hidden_size", help="Hidden size", type=int,
-                        default=512, required=False)
-    parser.add_argument("-s2am_dv_sel_rnn_dir", help="", type=int,
-                        default=2, required=False)
-    parser.add_argument("-s2am_dv_sel_rnn_layers", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-s2am_dv_pool_size", help="", type=int,
-                        default=2, required=False)
-
-    # s2s_dv
-    parser.add_argument("-s2s_dv_dropout_prob", help="Dropout prob", type=float,
-                        default=0.1, required=False)
-    parser.add_argument("-s2s_dv_hidden_size", help="", type=int,
+    parser.add_argument("-dv_seq2seq_hidden_size", help="Hidden size", type=int,
                         default=256, required=False)
-    parser.add_argument("-s2s_dv_rnn_dir", help="", type=int,
+    parser.add_argument("-dv_seq2seq_encoder_rnn_dir", help="", type=int,
                         default=2, required=False)
-    parser.add_argument("-s2s_dv_num_encoder_layers", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-s2s_dv_num_decoder_layers", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-s2s_dv_feedforward_hidden_size", help="", type=int,
-                        default=1024, required=False)
-    parser.add_argument("-s2s_dv_num_attn_heads", help="Number of attention heads", type=int,
-                        default=8, required=False)
-    parser.add_argument("-s2s_dv_num_attn_layers", help="Number of layers", type=int,
-                        default=1, required=False)
-    parser.add_argument("-s2s_dv_topk", help="", type=int,
-                        default=20, required=False)
-
-    parser.add_argument("-use_uniform_input_embedding", help="", type=str,
-                        default="true", required=False)
-    parser.add_argument("-use_wi_src_embedding", help="", type=str,
-                        default="false", required=False)
-    parser.add_argument("-fix_wi_src_embedding", help="", type=str,
-                        default="false", required=False)
-    parser.add_argument("-use_pretrained_sv_embedding", help="", type=str,
-                        default="true", required=False)
-    parser.add_argument("-use_pretrained_dv_embedding", help="", type=str,
-                        default="true", required=False)
-    parser.add_argument("-use_pretrained_src_embedding", help="", type=str,
-                        default="true", required=False)
-    parser.add_argument("-use_src_as_dv_embedding", help="", type=str,
-                        default="true", required=False)
-    # parser.add_argument("-use_wi_as_dv_embedding", help="", type=str,
-    #                     default="false", required=False)
-
-    # bc
-    parser.add_argument("-bc_dropout_prob", help="dropout prob", type=float,
-                        default=0.0, required=False)
-    parser.add_argument("-bc_hidden_size", help="hidden size", type=int,
-                        default=256, required=False)
-    parser.add_argument("-bc_feedforward_hidden_size", help="positional feedforward hidden size", type=int,
-                        default=1024, required=False)
-    parser.add_argument("-bc_num_attn_heads", help="Number of attention heads", type=int,
-                        default=8, required=False)
-    parser.add_argument("-bc_num_attn_layers", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-bc_num_aggr_layers", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-bc_rnn_dir", help="", type=int,
-                        default=2, required=False)
-
-    # wi_s2s_acm
-    parser.add_argument("-wi_s2s_acm_dropout_prob", help="Dropout prob", type=float,
-                        default=0.1, required=False)
-    parser.add_argument("-wi_s2s_acm_hidden_size", help="Hidden size", type=int,
-                        default=256, required=False)
-    parser.add_argument("-wi_s2s_acm_encoder_rnn_dir", help="", type=int,
-                        default=2, required=False)
-    parser.add_argument("-wi_s2s_acm_rnn_layers", help="", type=int,
-                        default=1, required=False)
-
-    # bin
-    parser.add_argument("-bin_rnn_hidden", help="", type=int,
-                        default=256, required=False)
-    parser.add_argument("-bin_dropout_prob", help="", type=float,
-                        default=0.5, required=False)
-    parser.add_argument("-bin_rnn_dir", help="", type=int,
-                        default=2, required=False)
-    parser.add_argument("-bin_seq_conv_window", help="", type=int,
-                        default=10, required=False)
-    parser.add_argument("-bin_pool_before_factor", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-bin_pool_after_factor", help="", type=int,
-                        default=1, required=False)
-    parser.add_argument("-bin_pool_seq_len", help="", type=int,
+    parser.add_argument("-dv_seq2seq_rnn_layers", help="", type=int,
                         default=1, required=False)
 
     # bool args
@@ -363,16 +199,10 @@ def prepare_params():
     parser.add_argument("-checkpoint_init_epoch", help="Checkpoint file name start", type=int,
                         default=0, required=False)
 
-    # parser.add_argument("-word_vec_file", help="W2V file", type=str,
-    #                     default=d+os.path.sep+"libs"+os.path.sep+"tencent_139w200d.txt", required=False)
-    # parser.add_argument("-vocab_cache_file", help="Vocab cache file", type=str,
-    #                     default=d+os.path.sep+"cache"+os.path.sep+"tencent_139w200d_cache.pkl", required=False)
-
     parser.add_argument("-word_vec_file", help="W2V file", type=str,
                         default=d+os.path.sep+"libs"+os.path.sep+"Tencent_AILab_ChineseEmbedding.txt", required=False)
     parser.add_argument("-vocab_cache_file", help="Vocab cache file", type=str,
                         default=d+os.path.sep+"cache"+os.path.sep+"tencent_ailab_vocab.pkl", required=False)
-
 
     parser.add_argument("-train_loader_cache_file", help="Train loader cache file", type=str,
                         default=d+os.path.sep+"cache"+os.path.sep+"train_loader.pkl", required=False)
@@ -388,15 +218,6 @@ def prepare_params():
     rv.lazy_load = str2bool(rv.lazy_load)
     rv.lr_decay_with_train_perf = str2bool(rv.lr_decay_with_train_perf)
     rv.lr_decay_with_train_loss_diff = str2bool(rv.lr_decay_with_train_loss_diff)
-
-    rv.use_uniform_input_embedding = str2bool(rv.use_uniform_input_embedding)
-    rv.use_wi_src_embedding = str2bool(rv.use_wi_src_embedding)
-    rv.fix_wi_src_embedding = str2bool(rv.fix_wi_src_embedding)
-    rv.use_pretrained_sv_embedding = str2bool(rv.use_pretrained_sv_embedding)
-    rv.use_pretrained_dv_embedding = str2bool(rv.use_pretrained_dv_embedding)
-    rv.use_pretrained_src_embedding = str2bool(rv.use_pretrained_src_embedding)
-    rv.use_src_as_dv_embedding = str2bool(rv.use_src_as_dv_embedding)
-
 
     if torch.cuda.is_available() and rv.seed > 0:
         torch.cuda.manual_seed(rv.seed)

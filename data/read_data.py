@@ -640,7 +640,7 @@ def build_k_hop_qrw_wi_data_from_click_graph(k_hop_seg_list, q2t, w2c, qrw_k, wi
     f_test.close()
 
 
-def extract_wi_pairs_from_qrw_wi_data(data_seg_list):
+def extract_rwg_pairs_from_data(data_seg_list):
     unique_pairs = set()
     input_n_words = []
     output_n_words = []
