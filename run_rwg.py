@@ -29,7 +29,8 @@ def main(params):
     tgt_vocab_cache_file = "cache/rwg_tgt_vocab.pkl"
     if os.path.isfile(src_vocab_cache_file):
         print("Loading src vocab from cache " + src_vocab_cache_file)
-        src_vocab = pickle.load(open(src_vocab_cache_file, "rb"))
+        with open(src_vocab_cache_file, "rb") as f:
+            src_vocab = pickle.load(f)
     else:
         print("Building src vocab")
         if pre_built_w2v is None:
@@ -40,13 +41,15 @@ def main(params):
                                           PAD_TOKEN,
                                           OOV_TOKEN,
                                       ), light_weight=True)
-        pickle.dump(src_vocab, open(src_vocab_cache_file, "wb"), protocol=4)
+        with open(src_vocab_cache_file, "wb") as f:
+            pickle.dump(src_vocab, f, protocol=4)
     params.src_vocab_size = len(src_vocab.w2i)
     print("src vocab size: ", params.src_vocab_size)
 
     if os.path.isfile(tgt_vocab_cache_file):
         print("Loading tgt vocab from cache " + tgt_vocab_cache_file)
-        tgt_vocab = pickle.load(open(tgt_vocab_cache_file, "rb"))
+        with open(tgt_vocab_cache_file, "rb") as f:
+            tgt_vocab = pickle.load(f)
     else:
         print("Building tgt vocab")
         if pre_built_w2v is None:
@@ -59,7 +62,8 @@ def main(params):
                                           SOS_TOKEN,
                                           EOS_TOKEN,
                                       ), light_weight=True)
-        pickle.dump(tgt_vocab, open(tgt_vocab_cache_file, "wb"), protocol=4)
+        with open(tgt_vocab_cache_file, "wb") as f:
+            pickle.dump(tgt_vocab, f, protocol=4)
     params.tgt_vocab_size = len(tgt_vocab.w2i)
     print("tgt vocab size: ", params.tgt_vocab_size)
 

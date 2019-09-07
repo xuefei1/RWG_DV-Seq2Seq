@@ -212,14 +212,16 @@ def get_queries_seg_data(in_fn, ignore_header=False, col_delim="\t", cache_file=
             ]
             rv.append(seg_data_list)
     if cache_file is not None:
-        pickle.dump(rv, open(cache_file, "wb"), protocol=4)
+        with open(cache_file, "wb") as f:
+            pickle.dump(rv, f, protocol=4)
     return rv
 
 
 def read_pre_seg_data(in_fn, ignore_header=False, word_tag_delim="0101010", token_delim="/", col_delim="\t",
                       cache_file=None, expected_n_cols=2, read_lines_limit=None):
     if cache_file is not None and os.path.isfile(cache_file):
-        rv = pickle.load(open(cache_file, "rb"))
+        with open(cache_file, "rb") as f:
+            rv = pickle.load(f)
         print("Reading cached data from {}".format(cache_file))
         return rv
     kw_pos = {"n", "nr", "v", "vn", "ns", "w", "nt", "vi", "f", "company", "nit", "nz"}
@@ -268,7 +270,8 @@ def read_pre_seg_data(in_fn, ignore_header=False, word_tag_delim="0101010", toke
             print("Warning: segmented column numbers do not match expected value {}".format(expected_n_cols))
     if cache_file is not None:
         random.shuffle(rv)
-        pickle.dump(rv, open(cache_file, "wb"), protocol=4)
+        with open(cache_file, "wb") as f:
+            pickle.dump(rv, f, protocol=4)
         print("Data cached to {}".format(cache_file))
     return rv
 
@@ -278,7 +281,8 @@ def read_pre_seg_tw_data(in_fn, ignore_header=False, word_tag_delim="/",
                          cache_file=None, expected_n_cols=9, read_lines_limit=None,
                          light_weight=False):
     if cache_file is not None and os.path.isfile(cache_file):
-        rv = pickle.load(open(cache_file, "rb"))
+        with open(cache_file, "rb") as f:
+            rv = pickle.load(f)
         print("Read {} lines of cached data from {}".format(len(rv), cache_file))
         return rv
     kw_pos = load_kw_pos()
@@ -332,7 +336,8 @@ def read_pre_seg_tw_data(in_fn, ignore_header=False, word_tag_delim="/",
             print("Warning: segmented column numbers do not match expected value {}".format(expected_n_cols))
     if cache_file is not None:
         random.shuffle(rv)
-        pickle.dump(rv, open(cache_file, "wb"), protocol=4)
+        with open(cache_file, "wb") as f:
+            pickle.dump(rv, f, protocol=4)
         print("{} lines of data cached to {}".format(len(rv), cache_file))
     return rv
 
@@ -1786,8 +1791,8 @@ if __name__ == "__main__":
         dir_path_2 + "/qry_log_20181207.txt",
         dir_path_2 + "/qry_log_20181209.txt",
     ]
-    with open("click_graph.txt", "r", encoding="utf-8") as f:
-        ls = f.readlines()
+    with open("click_graph.txt", "r", encoding="utf-8") as _f:
+        ls = _f.readlines()
     compress_click_graph(click_graph_generator, ls,
                          thresholds=[2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 50, 75, 100, 200, 500],
                          filter_threshold=2)

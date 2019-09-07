@@ -216,11 +216,13 @@ class RWGDataLoader:
         self.batches = []
         self.curr_batch_idx = 0
         if cache_file is not None and os.path.isfile(cache_file):
-            self.batches = pickle.load(open(cache_file, "rb"))
+            with open(cache_file, "rb") as f:
+                self.batches = pickle.load(f)
         else:
             self._build_batches(data)
             if cache_file is not None:
-                pickle.dump(self.batches, open(cache_file, "wb"), protocol=4)
+                with open(cache_file, "wb") as f:
+                    pickle.dump(self.batches, f, protocol=4)
 
     def _build_batches(self, data):
         qry_word_insts = data

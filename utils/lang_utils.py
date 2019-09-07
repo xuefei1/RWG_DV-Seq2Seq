@@ -194,12 +194,14 @@ def load_gensim_word_vec(word_vec_file, cache_file=None):
     import pickle
     if cache_file is not None and os.path.isfile(cache_file):
         print("Loading word vec from cache: " + cache_file)
-        w2v = pickle.load(open(cache_file, "rb"))
+        with open(cache_file, "rb") as f:
+            w2v = pickle.load(f)
         return w2v
     print("Loading word vec from source: " + word_vec_file)
     w2v = gensim.models.KeyedVectors.load_word2vec_format(word_vec_file, binary=False)
     if cache_file is not None:
-        pickle.dump(w2v, open(cache_file, "wb"), protocol=4)
+        with open(cache_file, "wb") as f:
+            pickle.dump(w2v, f, protocol=4)
     return w2v
 
 
