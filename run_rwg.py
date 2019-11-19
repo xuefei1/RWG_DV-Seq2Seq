@@ -6,6 +6,7 @@ from data_loaders import RWGDataLoader
 from model_rwg import *
 from data.read_data import *
 from constants import *
+from components import LRDecayOptimizer, get_masked_bce_criterion
 from params import prepare_params, merge_params
 
 

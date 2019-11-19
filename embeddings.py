@@ -120,33 +120,3 @@ class SortedWrapperFTEmbedding(nn.Module):
         rv = torch.tanh(self.ft_layer(rv))
         rv = torch.sort(rv)
         return rv[0]
-
-
-class CBWFineTuneEmbedding(nn.Module):
-
-    def __init__(self, d_model, embed_layer):
-        super(CBWFineTuneEmbedding, self).__init__()
-        self.embed_layer = embed_layer
-        self.d_model = d_model
-        self.ft_layer = PositionwiseFeedForward(d_model, 4 * d_model)
-        self.norm = SublayerConnection(d_model, dropout=0.0)
-
-    def forward(self, x):
-        rv = self.embed_layer(x)
-        rv = self.norm(rv, self.ft_layer)
-        return rv
-
-
-class CBWCosFineTuneEmbedding(nn.Module):
-
-    def __init__(self, d_model, embed_layer):
-        super(CBWCosFineTuneEmbedding, self).__init__()
-        self.embed_layer = embed_layer
-        self.d_model = d_model
-        self.ft_layer = PositionwiseFeedForward(d_model, 4 * d_model)
-        self.norm = SublayerConnection(d_model, dropout=0.0)
-
-    def forward(self, bow, top_bow):
-        rv = self.embed_layer(bow)
-        rv = self.norm(rv, self.ft_layer)
-        return rv
